@@ -1,0 +1,64 @@
+#include <iostream>
+#include <sstream>
+using namespace std ;
+
+struct Node {
+char info ; Node * filho1 , * filho2 , * filho3 ;
+
+Node ( char i , Node * f1 = nullptr , Node * f2 = nullptr , Node * f3 = nullptr ) {
+info = i ;
+filho1 = f1 ;
+filho2 = f2 ;
+filho3 = f3 ;
+cerr << "+ Node (" << info << ") criado ... " << endl ;
+}
+
+~ Node () { cerr << "- Node (" << info << ") destruido ... " << endl ; }
+};
+
+  // cria uma cadeia de caracteres com os valores pedidos (exemplo root-> child1 = A -- B)
+string strNode(Node *node){
+    stringstream ss;
+    if(node->filho1 != nullptr){
+        ss << node->info << "--" << node->filho1->info << endl << strNode(node->filho1);}
+    if(node->filho2 != nullptr){    
+        ss << node->info << "--" << node->filho2->info << endl << strNode(node->filho2);}
+    if(node->filho3 != nullptr){
+        ss << node->info << "--" << node->filho3->info << endl << strNode(node->filho3);}
+    
+    return ss.str();
+}
+
+  // Cria um código para gerar a representação gráfica da árvore utilizando o Graphviz Online
+string strGraphViz ( Node * root ) { 
+    stringstream ss ;
+
+    ss << "Graph.Arv {" << endl;
+    ss << "Node [shape = circle]" << endl;
+    ss << strNode(root) << "}" << endl;
+        
+return ss.str (); }
+
+  // limpa a árvore, deletando todos os nodos e a raiz
+void clean ( Node * root ) { 
+    if(root->filho1 != nullptr) clean(root->filho1);
+    if(root->filho2 != nullptr) clean(root->filho2);
+    if(root->filho3 != nullptr) clean(root->filho3);
+    delete root;
+    }
+
+
+
+int main () {
+Node *b = new Node ('B'), *e = new Node ('E'), *f = new Node ('F'), * g = new Node ('G'); // Folhas
+
+Node *c = new Node ('C',e ,f), *d = new Node ('D',g ); // Intermediarios
+
+Node * root = new Node ('A',b ,c ,d ); // Raiz
+
+cout << strGraphViz ( root );
+
+clean ( root );
+
+return 0;
+}
