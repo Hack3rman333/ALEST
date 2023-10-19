@@ -1,0 +1,46 @@
+#include <iostream>
+/* 
+  * Cria uma árvore simples, utilizando encadeamento... primeiro se cria os filhos e depois se cria o pai
+  * A raiz é o último a ser criado, ela irá conter os filhos dela, e eles irão conter os filhos deles;
+*/
+using namespace std;
+
+    struct Node{
+        char dado;
+        Node *filho1, *filho2, *filho3;
+
+        Node(char d, Node *f1 = nullptr, Node *f2 = nullptr, Node *f3 = nullptr){
+            dado = d;
+            filho1 = f1;
+            filho2 = f2;
+            filho3 = f3;
+         
+            cout << "Node (" << dado << ") criado..." << endl; // mensagem para verificar a criação
+        }
+        ~Node() { cout << "Node (" << dado << ") destruido..." << endl;    //mensagem para verificar a destruição}
+    };
+
+    int main(){
+
+        //primeiro os filhos e depois os pais;
+        Node *e = new Node('E'); // folha
+        Node *f = new Node('F'); // folha
+        Node *c = new Node('C', e, f); // Pai delas (interno)
+
+        Node *g = new Node('G'); // folha
+        Node *d = new Node('D', g); // Pai dela (interno)
+
+        Node *b = new Node('B'); // Interno
+        Node *a = new Node('A', b, c, d); // Pai dos internos, é a Raiz, ultimo a ser criado
+
+  // Deleta os Nodos criados;
+        delete e;
+        delete f;
+        delete c;
+        delete g;
+        delete d;
+        delete b;
+        delete a;
+
+        return 0;
+    }
