@@ -1,0 +1,87 @@
+#include <iostream>
+#include <sstream>
+using namespace std ;
+
+struct Node {
+char info ; Node *parent, *right, *left;
+
+Node ( char i , Node * l = nullptr , Node * r = nullptr) {
+info = i ;
+parent = nullptr;
+right = r;
+left = l;
+    if(left != nullptr){
+        left->parent = this;
+    }
+    if(right != nullptr){
+        right->parent = this;
+    }
+cerr << "+ Node (" << info << ") criado ... " << endl ;
+}
+~ Node () { // limpa a árvore, deletando todos os nodos e a raiz
+    if(left  != nullptr) delete left;
+    if(right != nullptr) delete right;
+    cerr << "- Node (" << info << ") destruido ... " << endl ; }
+};
+   
+
+  // cria uma cadeia de caracteres com os valores pedidos (exemplo root-> child1 = A -- B)
+string strNode(Node *node){
+    stringstream ss;
+    if(node->left != nullptr){
+        ss << node->info << "--" << node->left->info << endl << strNode(node->left);}
+    if(node->right != nullptr){    
+        ss << node->info << "--" << node->right->info << endl << strNode(node->right);}
+    return ss.str();
+}
+
+  // Cria um código para gerar a representação gráfica da árvore utilizando o Graphviz Online
+string strGraphViz ( Node * root ) { 
+    stringstream ss ;
+
+    ss << "Graph Arv {" << endl;
+    ss << "Node [shape = circle]" << endl;
+    ss << strNode(root) << "}" << endl;
+        
+return ss.str (); }
+
+int size(Node *subTree){
+    int res = 1;
+    
+    if(subTree->left != nullptr){
+        res += size(subTree->left);
+    }
+    if(subTree->right != nullptr){
+        res += size(subTree->right);
+    }
+    return res;
+}
+
+  
+
+
+
+
+int main () {
+    
+    Node *h = new Node('H');
+    Node *d = new Node('D');
+    Node *e = new Node('E');
+    Node *f = new Node('F', h);
+    Node *g = new Node('G');
+    
+
+    Node *b = new Node('B', d, e);
+    Node *c = new Node('C', f, g);
+    
+
+    Node *a = new Node('A', b, c); 
+
+cout << strGraphViz (a);
+
+cout << size(a) << endl;
+
+delete a;
+
+return 0;
+}
