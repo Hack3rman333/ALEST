@@ -1,0 +1,22 @@
+#include <iostream>
+
+using namespace std;
+
+long int Fatorial(int n){
+        if( n <= 1) return 1;
+
+        return n * Fatorial(n -1);
+
+}
+
+int main(){
+    long int n;
+    
+        cin >> n;
+
+        for(int i = 1; i <= n; i++ ){
+            cout << Fatorial(i) << endl;
+        }
+
+    return 0;
+}   
