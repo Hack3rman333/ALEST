@@ -1,0 +1,37 @@
+#include <iostream>
+
+using namespace std;
+
+int main(){
+
+int const * y; // y eh um ponteiro para
+// um int constante
+// eh a mesma coisa que: const int *y;
+const int c = 25; // c eh um inteiro constante
+y = & c;
+cout << "c = " << c << endl ;
+cout << "*y = " << *y << endl ;
+// NAO PERMITIDO : c ++;
+// NAO PERMITIDO : (*y) ++;
+int const d = 30; // d eh um inteiro constante
+y = & d;
+cout << "d = " << d << endl ;
+cout << "*y = " << *y << endl ;
+
+cout << endl;
+
+int e = 35; // e eh um inteiro
+int * const z = &e; // z eh um ponteiro
+// constante para um int
+cout << "e = " << e << endl ;
+cout << "*z = " << *z << endl ;
+e++;
+(*z)++;
+cout << "e = " << e << endl ;
+cout << "*z = " << *z << endl ;
+int f = 40; // f eh um inteiro
+// NAO PERMITIDO : z = &f;
+
+
+return 0;
+}
